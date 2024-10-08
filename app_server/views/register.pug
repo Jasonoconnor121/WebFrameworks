@@ -1,0 +1,35 @@
+extends layout
+
+block content
+    form
+    .form-row
+        .form-group.col-md-6
+        label(for='inputFname') First Name
+        input#inputFname.form-control(type='text' placeholder='First Name')
+        .form-group.col-md-6
+        label(for='inputLname') Last Name
+        input#inputLname.form-control(type='text' placeholder='Last Name')
+        .form-group.col-md-6
+        label(for='inputUname') Username
+        input#inputUname.form-control(type='text' placeholder='Username')
+        .form-group
+        label(for='exampleInputPassword1') Password
+        small#emailHelp.form-text.text-muted Minimum 8 Characters - Must include 1 Symbol or Number
+        input#exampleInputPassword1.form-control(type='password' placeholder='Password')
+        .form-group
+        label(for='exampleInputPassword2') Confirm Password
+        input#exampleInputPassword2.form-control(type='password' placeholder='Password')
+    .form-group
+        label(for='inputAddress') Address
+        input#inputAddress.form-control(type='text' placeholder='1234 Main St')
+    .form-group
+        label(for='inputAddress2') Address 2
+        input#inputAddress2.form-control(type='text' placeholder='Apartment, studio, or floor')
+    .form-row
+        .form-group.col-md-6
+        label(for='inputCity') City
+        input#inputCity.form-control(type='text')
+    .form-group
+        .form-check
+        input#gridCheck.form-check-input(type='checkbox')
+    button.btn.btn-primary(type='submit') Sign in

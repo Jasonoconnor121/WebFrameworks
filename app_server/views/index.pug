@@ -1,5 +1,16 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  form
+  .form-group
+    label(for='exampleInputEmail1') Username
+    input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email')
+  .form-group
+    label(for='exampleInputPassword1') Password
+    small#emailHelp.form-text.text-muted Minimum 8 Characters - Must include 1 Symbol or Number
+    input#exampleInputPassword1.form-control(type='password' placeholder='Password')
+  button.btn.btn-primary(type='submit') Submit
+  p
+    | Not a Member? 
+    a(href='www.google.com') Register here
+  
