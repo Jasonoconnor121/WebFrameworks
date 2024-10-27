@@ -7,5 +7,7 @@ const ctrlMain = require('../controllers/main');
 router.get('/', ctrlMain.index); 
 /* GET registration page. */
 router.get('/register', ctrlMain.register);
+/* GET classes page. */
+router.get('/classTimes', ctrlMain.classes);
 module.exports = router;
 
