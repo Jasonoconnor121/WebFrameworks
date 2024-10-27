@@ -3,13 +3,15 @@ extends layout
 block content
     form
     .form-row
-        
+        small#detilsHelp.form-text.text-muted Personal details
         input#inputFname.form-control(type='text' placeholder='First Name')
         input#inputLname.form-control(type='text' placeholder='Last Name')
+        input#inputEMail.form-control(type='text' placeholder='Email')
         input#inputUname.form-control(type='text' placeholder='Username')
         small#emailHelp.form-text.text-muted Minimum 8 Characters - Must include 1 Symbol or Number
         input#exampleInputPassword1.form-control(type='password' placeholder='Password')
         input#exampleInputPassword2.form-control(type='password' placeholder='Confirm Password')
+        small#addressHelp.form-text.text-muted Address details
         input#inputAddress.form-control(type='text' placeholder='1234 Main St')
         input#inputAddress2.form-control(type='text' placeholder='Apartment, studio, or floor')
     .form-row
