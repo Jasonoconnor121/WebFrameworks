@@ -1,16 +1,43 @@
 extends layout
 
 block content
-  form
-  .form-group
-    label(for='exampleInputEmail1') Username
-    input#exampleInputEmail1.form-control(type='email' aria-describedby='emailHelp' placeholder='Enter email')
-  .form-group
-    label(for='exampleInputPassword1') Password
-    small#emailHelp.form-text.text-muted Minimum 8 Characters - Must include 1 Symbol or Number
-    input#exampleInputPassword1.form-control(type='password' placeholder='Password')
-  button.btn.btn-primary(type='submit') Submit
-  .pTextinBody
-    | Not a Member? 
-    a(href='www.google.com') Register here
+  form#loginForm(action="/api/archerLogin" method="POST")
+    .form-group
+      label(for='username')= pageInfo.email
+      input#username.form-control(name= 'username' type='username' aria-describedby='emailHelp' placeholder='Enter username')
+    .form-group
+      label(for='exampleInputPassword1')= pageInfo.password
+      small#emailHelp.form-text.text-muted= pageInfo.passwordHelp
+      input#exampleInputPassword1.form-control(name = 'password' type='password' placeholder='Password')
+    button.btn.btn-primary(type='submit')= pageInfo.button
+    .pTextinBody
+      | Not a Member?
+      a(href='/register')= pageInfo.linkText
   
+
+  script.
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const payload = Object.fromEntries(formData.entries());
+
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+            .then(response => response.json)
+            .then(response => {
+                if (response.message = 'Login Successful') {
+                    alert('Login Successful')
+                    window.location.href = '/classTimes';
+                } else {
+                    response.json().then(err => {
+                        alert('You missed your target: ' + err.message);
+                    });
+                }
+            });
+         });

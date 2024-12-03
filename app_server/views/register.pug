@@ -1,20 +1,47 @@
 extends layout
 
 block content
-    form
-    .form-row
-        small#detilsHelp.form-text.text-muted Personal details
-        input#inputFname.form-control(type='text' placeholder='First Name')
-        input#inputLname.form-control(type='text' placeholder='Last Name')
-        input#inputEMail.form-control(type='text' placeholder='Email')
-        input#inputUname.form-control(type='text' placeholder='Username')
-        small#emailHelp.form-text.text-muted Minimum 8 Characters - Must include 1 Symbol or Number
-        input#exampleInputPassword1.form-control(type='password' placeholder='Password')
-        input#exampleInputPassword2.form-control(type='password' placeholder='Confirm Password')
-        small#addressHelp.form-text.text-muted Address details
-        input#inputAddress.form-control(type='text' placeholder='1234 Main St')
-        input#inputAddress2.form-control(type='text' placeholder='Apartment, studio, or floor')
-    .form-row
-        input#inputCity.form-control(type='text' placeholder='City/Town')
-    .form-group
-    button.btn.btn-primary(type='submit') Register
+    form#archerForm(action="/api/archers" method="POST")
+        .form-row
+            small#detilsHelp.form-text.text-muted= pageInfo.text1
+            input#inputFname.form-control(name="firstName" type="text" placeholder="First Name")
+            input#inputLname.form-control(name="lastName" type="text" placeholder="Last Name")
+            input#inputEMail.form-control(name="email" type="text" placeholder="Email")
+            input#inputUname.form-control(name="username" type="text" placeholder="Username")
+            small#emailHelp.form-text.text-muted= pageInfo.text2
+            input#exampleInputPassword1.form-control(name="password" type="password" placeholder="Password")
+            input#exampleInputPassword2.form-control(name="confirmPassword" type="password" placeholder="Confirm Password")
+            small#addressHelp.form-text.text-muted= pageInfo.text3
+            input#inputAddress.form-control(name="street" type="text" placeholder="Street")
+            input#inputAddress2.form-control(name="town" type="text" placeholder="Town")
+        .form-row
+            input#inputCounty.form-control(name ="county" type='text' placeholder='County')
+        .form-group
+        button.btn.btn-primary(type='submit')= pageInfo.button
+
+
+    script.
+        document.getElementById('archerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            const payload = Object.fromEntries(formData.entries());
+
+            fetch(this.action, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Archer Ready');
+                    this.reset();
+                } else {
+                    response.json().then(err => {
+                        alert('You missed your target: ' + err.message);
+                    });
+                }
+            });
+         });

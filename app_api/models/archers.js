@@ -33,20 +33,4 @@ const archerSchema = new mongoose.Schema({
         required: true
         }
 });
-
-const classInfoSchema = new mongoose.Schema({
-    classTitle: {
-        type: String,
-        required: true
-        }, 
-    classDescription: {
-        type: String,
-        required: true
-        },
-    Instructor: {
-        type: String,
-        required: true
-        }
-});
-mongoose.model('Archers', archerSchema);
-mongoose.model('Classes', classInfoSchema);
+mongoose.model('Archer', archerSchema);

@@ -6,27 +6,67 @@ block content
                 .col-4
                     .card
                         .card-body
-                        h5.card-title Beginner Archery Class
+                        h5.card-title= pageInfo.card1Title
                         p.card-text
-                            | Are you new to archery and looking for somewhere to start? 
+                            | #{pageInfo.card1Text1} 
                             br
-                            | Consider joining the Beginner Archery Class to get started!
-                        a.btn.btn-primary(href='#') View Class Times
+                            | #{pageInfo.card1Text2}
+                        a.btn.btn-primary(href='#' id=pageInfo.card1ID)= pageInfo.card1Button
                 .col-4
                     .card
                         .card-body
-                        h5.card-title Advanced Archery
+                        h5.card-title= pageInfo.card2Title
                         p.card-text
-                            | An advanced class designed for archery aficianados to meet peers, have competions and hone their aim! 
+                            | #{pageInfo.card2Text1}
                             br
-                            | Sign up below
-                        a.btn.btn-primary(href='#') View Class Times
+                            | #{pageInfo.card2Text2}
+                        a.btn.btn-primary(href='#' id=pageInfo.card2ID)= pageInfo.card3Button
                 .col-4
                     .card
                         .card-body
-                        h5.card-title Fun Games
+                        h5.card-title= pageInfo.card3Title
                         p.card-text
-                            | Interesting in taking aim at something more fun than a straw target? Try our fun games class, where targets include apples, baloon animals and more!
+                            | #{pageInfo.card3Text1}
                             br
-                            |  Sign up now!
-                        a.btn.btn-primary(href='#') View Class Times
+                            | #{pageInfo.card3Text2}
+                        a.btn.btn-primary(href='#' id=pageInfo.card3ID)= pageInfo.card3Button
+
+
+
+    script.
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn-primary');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+
+                    const id = this.id;
+
+                    fetch(`/api/getClassInfo/${id}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            const newCard = document.createElement('div');
+                        newCard.classList.add('row', 'mt-3'); // Bootstrap row for full width alignment
+
+                        newCard.innerHTML = `
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${data.classTitle}</h5>
+                                        <p class="card-text">${data.classDescription}</p>
+                                        <p><strong>Instructor:</strong> ${data.instructor}</p>
+                                        <p><strong>Class Times:</strong> ${data.classTimes.join(', ')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+
+                        document.querySelector('.container-fluid').appendChild(newCard);
+                        })
+                        .catch(error => {
+                            console.error('Error fetching class details:', error);
+                            alert('Failed to load class details');
+                        });
+                });
+            });
+        });
