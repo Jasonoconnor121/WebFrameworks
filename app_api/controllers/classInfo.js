@@ -1,8 +1,20 @@
+const request = require('request');
 const mongoose = require('mongoose');
 const classInfo = mongoose.model('classInfo');
+const apiOptions = { 
+server : 'http://localhost:3000' 
+}; 
+if (process.env.NODE_ENV === 'production') { 
+apiOptions.server = 'https://webframeworks-joc.onrender.com'; 
+}
 
 const getClassInfo = function(req, res){
-    const classId = req.params.id; // Get the class ID from the URL
+    const classId = req.params.id;
+    const path = `/getClassInfo/${classId}`;
+    const requestapiOption = {
+        url: `${apiOptions.server}${path}`,
+        method: 'GET'
+    };
     console.log("Class id: ", classId);
     classInfo.findById(classId)
         .then(classData => {

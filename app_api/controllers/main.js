@@ -1,6 +1,13 @@
+const request = require('request');
+const apiOptions = { 
+server : 'http://localhost:3000' 
+}; 
+
+if (process.env.NODE_ENV === 'production') { 
+apiOptions.server = 'https://webframeworks-joc.onrender.com'; 
+}
 const mongoose = require('mongoose');
 const archer = mongoose.model('Archer');
-
 
 const archersCreate = function (req, res){
     try {
