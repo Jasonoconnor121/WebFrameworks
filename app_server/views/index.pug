@@ -29,15 +29,25 @@ block content
                 },
                 body: JSON.stringify(payload),
             })
-            .then(response => response.json)
             .then(response => {
-                if (response.message = 'Login Successful') {
-                    alert('Login Successful')
-                    window.location.href = '/classTimes';
-                } else {
-                    response.json().then(err => {
-                        alert('You missed your target: ' + err.message);
+                if (!response.ok) {
+                    // If response is not OK, handle the error response
+                    return response.json().then(err => {
+                        throw new Error(err.message || 'Failed to log in');
                     });
                 }
+                return response.json(); // Parse the successful response
+            })
+            .then(data => {
+                if (data.message === 'Login successful') {
+                    alert('Login Successful');
+                    window.location.href = '/classTimes'; // Redirect to the next page
+                } else {
+                    alert('Login failed: ' + data.message);
+                }
+            })
+            .catch(err => {
+                alert('Error: ' + err.message);
+                console.error('Login error:', err);
             });
          });

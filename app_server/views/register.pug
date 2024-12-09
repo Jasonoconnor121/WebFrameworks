@@ -4,18 +4,17 @@ block content
     form#archerForm(action="/api/archers" method="POST")
         .form-row
             small#detilsHelp.form-text.text-muted= pageInfo.text1
-            input#inputFname.form-control(name="firstName" type="text" placeholder="First Name")
-            input#inputLname.form-control(name="lastName" type="text" placeholder="Last Name")
+            input#inputFname.form-control(name="fName" type="text" placeholder="First Name")
+            input#inputLname.form-control(name="lName" type="text" placeholder="Last Name")
             input#inputEMail.form-control(name="email" type="text" placeholder="Email")
-            input#inputUname.form-control(name="username" type="text" placeholder="Username")
+            input#inputUname.form-control(name="uName" type="text" placeholder="Username")
             small#emailHelp.form-text.text-muted= pageInfo.text2
             input#exampleInputPassword1.form-control(name="password" type="password" placeholder="Password")
-            input#exampleInputPassword2.form-control(name="confirmPassword" type="password" placeholder="Confirm Password")
             small#addressHelp.form-text.text-muted= pageInfo.text3
-            input#inputAddress.form-control(name="street" type="text" placeholder="Street")
-            input#inputAddress2.form-control(name="town" type="text" placeholder="Town")
+            input#inputAddress.form-control(name="addressStreet" type="text" placeholder="Street")
+            input#inputAddress2.form-control(name="addressTown" type="text" placeholder="Town")
         .form-row
-            input#inputCounty.form-control(name ="county" type='text' placeholder='County')
+            input#inputCounty.form-control(name ="addressCounty" type='text' placeholder='County')
         .form-group
         button.btn.btn-primary(type='submit')= pageInfo.button
 

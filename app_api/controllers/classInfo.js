@@ -10,17 +10,30 @@ apiOptions.server = 'https://webframeworks-joc.onrender.com';
 
 const getClassInfo = function(req, res){
     const classId = req.params.id;
-    console.log("Class id: ", classId);
     classInfo.findById(classId)
         .then(classData => {
             if (!classData) {
-                return res.status(404).json({ message: 'Class not found' });
+                return res
+                        .status(404)
+                        .json({
+                            message: 'Class not found',
+                            error: err
+                         });
             }
-            res.status(200).json(classData); // Send the class data back to the frontend
+            res
+                .status(200)
+                .json(
+                    classData
+                );
         })
         .catch(err => {
             console.error('Error fetching class data:', err);
-            res.status(500).json({ message: 'Error fetching class data', error: err });
+            res
+                .status(500)
+                .json({ 
+                    message: 'Error fetching class data', 
+                    error: err 
+                });
         });
 };
 

@@ -9,43 +9,85 @@ apiOptions.server = 'https://webframeworks-joc.onrender.com';
 const mongoose = require('mongoose');
 const archer = mongoose.model('Archer');
 
-const archersCreate = function (req, res){
+const archersCreate = async function (req, res) {
     try {
         const newArcher = new archer({
-            fName: req.body.firstName,
-            lName: req.body.lastName,
-            uName: req.body.username,
+            fName: req.body.fName,
+            lName: req.body.lName,
+            uName: req.body.uName,
             email: req.body.email,
-            password: req.body.password, // Note: Passwords should be hashed in production!
-            addressStreet: req.body.street,
-            addressTown: req.body.town,
-            addressCounty: req.body.county
+            password: req.body.password,
+            addressStreet: req.body.addressStreet,
+            addressTown: req.body.addressTown,
+            addressCounty: req.body.addressCounty
         });
 
-        newArcher.save();
+        await newArcher.save();
+
+        res
+            .status(201)
+            .json({
+                message: 'Archer created successfully',
+                archer: newArcher
+        });
     } catch (err) {
-        console.error(err);
-        res.status(400).json({ message: 'Error creating archer', error: err });
+        console.error('Error creating archer:', err); 
+        res
+            .status(400)
+            .json({
+                message: 'Error creating archer',
+                error: err.message || err
+        });
     }
 };
 
-const archersCheck = function (req, res){
-    const username = req.body.username;
-    const password = req.body.password;
+const archersCheck = function (req, res) {
+    const { username, password } = req.body;
 
-    archer.findOne({ uName: username, password: password })
-    .then(user => {
-        if (user) {
-            res.status(200).json({ message: 'Login successful', user });
+    if (!username || !password) {
+        res
+            .status(400)
+            .json({
+                message: 'Username and password are required',
+        });
+        return;
+    }
 
-        } else {
-            res.status(401).json({ message: 'Invalid username or password' });
-        }
-    })
-    .catch(err => {
-        console.error('Error during login:', err);
-        res.status(500).json({ message: 'Server error', error: err });
-    });
+    archer.findOne({ uName: username })
+        .then(user => {
+            if (!user) {
+                res
+                    .status(401)
+                    .json({
+                        message: 'Invalid username or password',
+                });
+                return;
+            }
+
+            if (user.password === password) {
+                res
+                    .status(200)
+                    .json({
+                        message: 'Login successful',
+                        user,
+                });
+            } else {
+                res
+                .status(401)
+                .json({
+                    message: 'Invalid username or password',
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error during login:', err);
+            res
+            .status(500)
+            .json({
+                message: 'Server error during login',
+                error: err,
+            });
+        });
 };
 
 
