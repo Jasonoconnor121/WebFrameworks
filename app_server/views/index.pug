@@ -31,12 +31,11 @@ block content
             })
             .then(response => {
                 if (!response.ok) {
-                    // If response is not OK, handle the error response
                     return response.json().then(err => {
                         throw new Error(err.message || 'Failed to log in');
                     });
                 }
-                return response.json(); // Parse the successful response
+                return response.json();
             })
             .then(data => {
                 if (data.message === 'Login successful') {
